@@ -1,0 +1,56 @@
+version: "3.7"
+
+x-common:
+  - &DB_PASS "test"
+  - &DB_USER "test"
+  - &DB_NAME "testdb"
+
+services:
+  express:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    depends_on:
+      - db
+    environment:
+      DB_NAME: *DB_NAME
+      DB_USER: *DB_USER
+      DB_PASS: *DB_PASS
+      DB_HOST: db
+      DB_PORT: 3306
+      TESTING: 1
+      TZ: Tokyo/Asia
+    volumes:
+      - ./entrypoint.sh:/entrypoint.sh
+      - ./ormconfig.org.json:/home/node/app/ormconfig.org.json
+      - ./package.json:/home/node/app/package.json
+      - ./tsconfig.json:/home/node/app/tsconfig.json
+      - ./src:/home/node/app/src
+      - ./test:/home/node/app/test
+    command: bash
+    entrypoint: /entrypoint.sh
+    tty: true
+    ports:
+      - "13000:3000"
+
+  db:
+    image: mariadb:10
+    environment:
+      MYSQL_ROOT_PASSWORD: 'maria'
+      MYSQL_DATABASE: *DB_NAME
+      MYSQL_USER: *DB_USER
+      MYSQL_PASSWORD: *DB_PASS
+      MYSQL_ALLOW_EMPTY_PASSWORD: 0
+      MYSQL_INITDB_SKIP_TZINFO: 'yes'
+      TZ: Tokyo/Asia
+
+    command: "mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci"
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - "13306:3306"
+
+volumes:
+  mysql:
+    driver: "local"
+
