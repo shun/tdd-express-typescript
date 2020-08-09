@@ -7,6 +7,7 @@ x-common:
 
 services:
   express:
+    image: kudoshunsuke/tdd-express-typescript
     build:
       context: ./
       dockerfile: ./Dockerfile
