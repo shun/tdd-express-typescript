@@ -1,7 +1,10 @@
 import { AppServer } from "./server";
+import { createConnection } from "typeorm";
 
-function bootstrap() {
+async function bootstrap() {
     const server = new AppServer();
+    await server.setup();
+    await createConnection();
     server.start();
 }
 

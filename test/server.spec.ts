@@ -1,10 +1,19 @@
 import request from "supertest";
 import { AppServer } from "../src/server";
 
-describe("GET /", () => {
-  it("return 200 and correct message", () => {
-    const server = new AppServer();
+let server: AppServer;
 
+beforeAll(async () => {
+  server = new AppServer();
+  await server.setup();
+
+});
+
+afterAll(async () => {
+});
+
+describe("GET /", () => {
+  it("return 200 and correct message", async () => {
     return request(server.app)
             .get("/")
             .expect(200)

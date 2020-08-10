@@ -1,6 +1,6 @@
-{
+module.exports = {
    "type": "mysql",
-   "host": "localhost",
+   "host": "db",
    "port": 3306,
    "username": "{{ DB_USER }}",
    "password": "{{ DB_PASS }}",

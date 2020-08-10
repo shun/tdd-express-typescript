@@ -10,17 +10,11 @@ function apply_variables() {
 }
 
 function setup() {
-    cp ${APP_HOME}/ormconfig.org.json ${APP_HOME}/ormconfig.json
-    local filepath=${APP_HOME}/ormconfig.json
+    cp ${APP_HOME}/ormconfig.org.js ${APP_HOME}/ormconfig.js
+    local filepath=${APP_HOME}/ormconfig.js
     apply_variables "DB_USER" ${DB_USER} ${filepath}
     apply_variables "DB_PASS" ${DB_PASS} ${filepath}
     apply_variables "DB_NAME" ${DB_NAME} ${filepath}
-
-    #cp ${HOME}/src/db/db.config.org.ts ${HOME}/src/db/db.config.ts
-    #local filepath=${HOME}/src/db/db.config.ts
-    #apply_variables "DB_USER" ${DB_USER} ${filepath}
-    #apply_variables "DB_PASS" ${DB_PASS} ${filepath}
-    #apply_variables "DB_NAME" ${DB_NAME} ${filepath}
 }
 
 function wait_db() {
@@ -32,6 +26,7 @@ function wait_db() {
     echo "!! database is ready."
 }
 
+rm ${APP_HOME}/ormconfig.json
 setup
 wait_db
 

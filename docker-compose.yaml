@@ -7,6 +7,7 @@ x-common:
 
 services:
   express:
+    image: kudoshunsuke/tdd-express-typescript
     build:
       context: ./
       dockerfile: ./Dockerfile
@@ -23,6 +24,7 @@ services:
     volumes:
       - ./entrypoint.sh:/entrypoint.sh
       - ./ormconfig.org.json:/home/node/app/ormconfig.org.json
+      - ./ormconfig.org.js:/home/node/app/ormconfig.org.js
       - ./package.json:/home/node/app/package.json
       - ./tsconfig.json:/home/node/app/tsconfig.json
       - ./src:/home/node/app/src
@@ -31,7 +33,7 @@ services:
     entrypoint: /entrypoint.sh
     tty: true
     ports:
-      - "13000:3000"
+      - "14000:4000"
 
   db:
     image: mariadb:10
